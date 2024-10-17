@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -22,11 +25,21 @@ public class MemberController {
     }
 
     // 회원가입 처리
-    @PostMapping("/member/signup")
-    public String signup(@ModelAttribute MemberDTO memberDTO) {
-        memberService.save(memberDTO);
-        return "login";
+    @PostMapping(value = "/member/signup", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> signup(@RequestBody MemberDTO memberDTO) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            memberService.save(memberDTO);
+            response.put("success", true);
+            response.put("message", "회원가입이 완료되었습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "회원가입 중 오류가 발생했습니다.");
+        }
+        return response;
     }
+
 
     // 이메일 중복 확인
     @GetMapping("/member/checkEmail")
@@ -43,16 +56,23 @@ public class MemberController {
     }
 
     // 로그인 처리
-    @PostMapping("/member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, Model model) {
+    @PostMapping(value = "/member/login", produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> login(@RequestBody MemberDTO memberDTO) {
+        Map<String, Object> response = new HashMap<>();
+
         String token = memberService.login(memberDTO.getEmail(), memberDTO.getPassword());
 
         if (token != null) {
-            model.addAttribute("token", token);
-            return "index"; // 로그인 성공 후 리다이렉트
+            response.put("success", true);
+            response.put("token", token);
+            response.put("message", "로그인에 성공하였습니다.");
         } else {
-            model.addAttribute("error", "잘못된 이메일 또는 비밀번호입니다.");
-            return "login"; // 로그인 실패 시 다시 로그인 페이지로
+            response.put("success", false);
+            response.put("message", "잘못된 이메일 또는 비밀번호입니다.");
         }
+
+        return response; // JSON 응답
     }
+
 }
