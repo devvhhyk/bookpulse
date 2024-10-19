@@ -1,33 +1,79 @@
-let newBooksPage = 1;
-let bestsellersPage = 1;
-
-function loadMoreBooks(type) {
-    let url = '';
-    let listElement = null;
-
-    if (type === 'new') {
-        url = `/api/books/new-arrivals?page=${newBooksPage}&size=3`;
-        listElement = document.getElementById('newBooksList');
-        newBooksPage++;
-    } else if (type === 'bestseller') {
-        url = `/api/books/bestsellers?page=${bestsellersPage}&size=3`;
-        listElement = document.getElementById('bestsellerList');
-        bestsellersPage++;
-    }
-
-    fetch(url)
-        .then(response => response.json())
-        .then(books => {
-            books.forEach(book => {
-                const bookItem = document.createElement('div');
-                bookItem.classList.add('book-item');
-                bookItem.innerHTML = `<p>${book.title}</p><p>저자: ${book.author}</p>`;
-                listElement.appendChild(bookItem);
-            });
-        });
-}
-
 function searchBooks() {
     const query = document.getElementById('search').value;
     alert('Searching for: ' + query);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const token = localStorage.getItem('jwtToken');
+    const isLoggedIn = token !== null;
+
+    if (isLoggedIn) {
+        // 토큰이 있으면 서버에 유효성 검증 요청
+        $.ajax({
+            url: '/member/validateToken',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ token: token }),
+            success: function(response) {
+                if (response.valid) {
+                    updateButtonDisplay(true);
+                } else {
+                    // 토큰이 유효하지 않으면 로그아웃 처리
+                    localStorage.removeItem('jwtToken');
+                    updateButtonDisplay(false);
+                }
+            },
+            error: function() {
+                // 서버 요청에 실패하면 로그아웃 처리
+                localStorage.removeItem('jwtToken');
+                updateButtonDisplay(false);
+            }
+        });
+    } else {
+        updateButtonDisplay(false);
+    }
+
+    // 로그아웃 버튼 클릭 시 처리
+    const logoutButton = document.querySelector(".logout-button");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function(event) {
+            event.preventDefault(); // 기본 링크 동작 막기
+            $.ajax({
+                url: '/member/logout',
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        localStorage.removeItem('jwtToken'); // 로그아웃 시 토큰 제거
+                        alert(response.message);
+                        updateButtonDisplay(false);
+                        window.location.href = '/';
+                    } else {
+                        alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+                    }
+                },
+                error: function() {
+                    alert("로그아웃 중 문제가 발생했습니다.");
+                }
+            });
+        });
+    }
+});
+
+// 로그인 여부에 따라 버튼 표시를 업데이트하는 함수
+function updateButtonDisplay(isLoggedIn) {
+    const loginButton = document.querySelector(".login-button");
+    const logoutButton = document.querySelector(".logout-button");
+    const mypageButton = document.querySelector(".mypage-button");
+
+    if (isLoggedIn) {
+        console.log("JWT 토큰이 있습니다:");
+        if (loginButton) loginButton.style.display = "none";
+        if (logoutButton) logoutButton.style.display = "block";
+        if (mypageButton) mypageButton.style.display = "block";
+    } else {
+        console.log("JWT 토큰이 없습니다. 로그아웃 상태입니다.");
+        if (loginButton) loginButton.style.display = "block";
+        if (logoutButton) logoutButton.style.display = "none";
+        if (mypageButton) mypageButton.style.display = "none";
+    }
 }

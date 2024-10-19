@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookpulse - 홈</title>
+    <title>Bookpulse</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
@@ -11,7 +12,10 @@
     <!-- 왼쪽 메뉴바 -->
     <div class="sidebar">
         <div>
-            <a href="/member/login">로그인</a>
+            <a href="/" class="brand">bookpulse</a>
+            <a href="/member/login" class="login-button">로그인</a>
+            <a href="/member/logout" class="logout-button" style="display: none;">로그아웃</a>
+            <a href="/member/mypage" class="mypage-button" style="display: none;">마이페이지</a>
             <a href="/books">전체도서</a>
             <a href="/books/newbook">신작도서</a>
             <a href="/books/bestseller">베스트셀러</a>
@@ -23,7 +27,6 @@
 
     <!-- 오른쪽 콘텐츠 -->
     <div class="content">
-        <h1>bookpulse 사이트에 오신 것을 환영합니다!</h1>
 
         <!-- 도서 검색 -->
         <div class="search-bar">
@@ -34,6 +37,7 @@
         <!-- 신작 도서 진열 -->
         <div class="book-section" id="newBooksSection">
             <h2>신작 도서</h2>
+            <button class="more-button" onclick="window.location.href='/books/newbook'">더보기</button>
             <div class="book-list">
                 <th:block th:each="book : ${newBooks}">
                     <div class="book-item">
@@ -43,12 +47,12 @@
                     </div>
                 </th:block>
             </div>
-            <button class="more-button" onclick="window.location.href='/books/newbook'">더보기</button>
         </div>
 
         <!-- 베스트셀러 도서 진열 -->
         <div class="book-section" id="bestsellerSection">
             <h2>베스트셀러 도서</h2>
+            <button class="more-button" onclick="window.location.href='/books/bestseller'">더보기</button>
             <div class="book-list">
                 <th:block th:each="book : ${bestsellers}">
                     <div class="book-item">
@@ -58,7 +62,6 @@
                     </div>
                 </th:block>
             </div>
-            <button class="more-button" onclick="window.location.href='/books/bestseller'">더보기</button>
         </div>
     </div>
 </div>

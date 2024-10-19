@@ -14,21 +14,20 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     $.ajax({
         url: '/member/login',
-        data: JSON.stringify({ email: email, password: password }),
         type: 'POST',
         contentType: 'application/json',
-        dataType: 'json',
-        success: function(result) {
-            if (result.success) {
-                alert(result.message);
-                location.href = "/";
+        data: JSON.stringify({ email: email, password: password }),
+        success: function(response) {
+            if (response.success) {
+                localStorage.setItem('jwtToken', response.token); // JWT 토큰 저장
+                alert(response.message);
+                window.location.href = '/';  // 메인 페이지로 이동
             } else {
-                alert(result.message);
+                alert(response.message);
             }
         },
-        error: function(jqXHR, status, error) {
-            console.error("로그인 요청 오류:", error);
-            alert("로그인 요청 중 문제가 발생했습니다.");
+        error: function() {
+            alert("로그인 중 문제가 발생했습니다.");
         }
     });
 });

@@ -15,6 +15,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtService jwtService;
 
+    // 이메일을 통해 MemberEntity를 찾고, MemberDTO로 변환하여 반환
+    public MemberDTO findByEmail(String email) {
+        MemberEntity memberEntity = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 사용자가 없습니다."));
+        return MemberDTO.toMemberDTO(memberEntity);
+    }
+
+    // 회원 저장
     public void save(MemberDTO memberDTO) {
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
         memberRepository.save(memberEntity);
@@ -67,5 +75,15 @@ public class MemberService {
             throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
         }
         return memberRepository.findByEmail(email).isPresent();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            // JwtService를 사용해 토큰의 유효성을 확인
+            return jwtService.isValid(token);
+        } catch (Exception e) {
+            // 예외 발생 시 토큰이 유효하지 않다고 판단
+            return false;
+        }
     }
 }
