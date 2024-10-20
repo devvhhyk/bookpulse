@@ -98,7 +98,7 @@ public class MemberController {
         return response;
     }
 
-    // 마이페이지
+    // 마이페이지 접근 (로그인 상태에서만 접근 가능)
     @GetMapping("/member/mypage")
     public String myPage(HttpSession session, Model model) {
         String email = (String) session.getAttribute("user");

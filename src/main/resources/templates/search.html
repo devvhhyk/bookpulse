@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전체 도서 목록</title>
+    <title>검색 결과</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/search.js"></script>
 </head>
 <body>
-<h1>전체 도서 목록</h1>
+<h1>검색 결과: "<span th:text="${query}"></span>"</h1>
 <div class="book-list">
     <th:block th:each="book : ${books}">
         <div class="book-item">
@@ -20,5 +21,6 @@
         </div>
     </th:block>
 </div>
+<a href="/" class="back-link">홈으로</a>
 </body>
 </html>

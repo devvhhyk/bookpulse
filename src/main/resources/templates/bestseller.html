@@ -2,21 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>베스트셀러 도서 목록</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-
-<h1>베스트셀러 도서 목록</h1>
+<h1>베스트셀러</h1>
 <div class="book-list">
-    <ul>
-        <th:block th:each="book : ${bestsellers}">
-            <li>
-                <img th:src="${book.imageUrl}" alt="도서 이미지" width="100px" height="150px" />
-                <p th:text="${book.title}"></p>
-                <p th:text="'저자: ' + ${book.author}"></p>
-            </li>
-        </th:block>
-    </ul>
+    <th:block th:each="book : ${bestsellers}">
+        <div class="book-item">
+            <img th:src="${book.imageUrl}" alt="도서 이미지" />
+            <p th:text="${book.title}"></p>
+            <p th:text="${book.author}"></p>
+            <p th:text="${book.price} + '원'"></p>
+        </div>
+    </th:block>
 </div>
+<a href="/" class="back-button">홈으로</a>
 </body>
 </html>

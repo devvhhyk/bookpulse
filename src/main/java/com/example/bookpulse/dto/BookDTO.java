@@ -1,5 +1,6 @@
 package com.example.bookpulse.dto;
 
+import com.example.bookpulse.entity.BookEntity;
 import lombok.*;
 
 @Getter
@@ -17,4 +18,15 @@ public class BookDTO {
     private String publisher;            // 출판사
     private boolean isNewBook;        // 신작 도서 여부
     private boolean isBestseller;        // 베스트셀러 여부
+
+    public static BookDTO fromEntity(BookEntity bookEntity) {
+        return BookDTO.builder()
+                .id(bookEntity.getId())
+                .title(bookEntity.getTitle())
+                .author(bookEntity.getAuthor())
+                .publisher(bookEntity.getPublisher())
+                .imageUrl(bookEntity.getImageUrl())
+                .price(bookEntity.getPrice())
+                .build();
+    }
 }

@@ -1,6 +1,11 @@
+// 도서 검색 함수
 function searchBooks() {
-    const query = document.getElementById('search').value;
-    alert('Searching for: ' + query);
+    const query = document.getElementById('search').value.trim();
+    if (query) {
+        window.location.href = `/books/search?query=${encodeURIComponent(query)}`;
+    } else {
+        alert("검색어를 입력해주세요.");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -66,12 +71,10 @@ function updateButtonDisplay(isLoggedIn) {
     const mypageButton = document.querySelector(".mypage-button");
 
     if (isLoggedIn) {
-        console.log("JWT 토큰이 있습니다:");
         if (loginButton) loginButton.style.display = "none";
         if (logoutButton) logoutButton.style.display = "block";
         if (mypageButton) mypageButton.style.display = "block";
     } else {
-        console.log("JWT 토큰이 없습니다. 로그아웃 상태입니다.");
         if (loginButton) loginButton.style.display = "block";
         if (logoutButton) logoutButton.style.display = "none";
         if (mypageButton) mypageButton.style.display = "none";

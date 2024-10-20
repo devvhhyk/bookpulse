@@ -17,8 +17,6 @@
             <a href="/member/logout" class="logout-button" style="display: none;">로그아웃</a>
             <a href="/member/mypage" class="mypage-button" style="display: none;">마이페이지</a>
             <a href="/books">전체도서</a>
-            <a href="/books/newbook">신작도서</a>
-            <a href="/books/bestseller">베스트셀러</a>
             <a href="/cart">장바구니</a>
             <a href="/community">커뮤니티로 이동</a>
         </div>
@@ -34,12 +32,12 @@
             <button onclick="searchBooks()">검색</button>
         </div>
 
-        <!-- 신작 도서 진열 -->
-        <div class="book-section" id="newBooksSection">
-            <h2>신작 도서</h2>
-            <button class="more-button" onclick="window.location.href='/books/newbook'">더보기</button>
+        <!-- 베스트셀러 도서 진열 -->
+        <div class="book-section" id="bestsellerSection">
+            <h2>베스트셀러 도서</h2>
+            <button class="more-button" onclick="window.location.href='/books/bestseller'">더보기</button>
             <div class="book-list">
-                <th:block th:each="book : ${newBooks}">
+                <th:block th:each="book : ${bestsellers}">
                     <div class="book-item">
                         <img th:src="${book.imageUrl}" alt="도서 이미지" />
                         <p th:text="${book.title}" class="book-title"></p>
@@ -49,12 +47,12 @@
             </div>
         </div>
 
-        <!-- 베스트셀러 도서 진열 -->
-        <div class="book-section" id="bestsellerSection">
-            <h2>베스트셀러 도서</h2>
-            <button class="more-button" onclick="window.location.href='/books/bestseller'">더보기</button>
+        <!-- 신작 도서 진열 -->
+        <div class="book-section" id="newBooksSection">
+            <h2>신작 도서</h2>
+            <button class="more-button" onclick="window.location.href='/books/newbook'">더보기</button>
             <div class="book-list">
-                <th:block th:each="book : ${bestsellers}">
+                <th:block th:each="book : ${newBooks}">
                     <div class="book-item">
                         <img th:src="${book.imageUrl}" alt="도서 이미지" />
                         <p th:text="${book.title}" class="book-title"></p>

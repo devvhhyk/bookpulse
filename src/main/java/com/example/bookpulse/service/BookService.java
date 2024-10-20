@@ -1,5 +1,6 @@
 package com.example.bookpulse.service;
 
+import com.example.bookpulse.dto.BookDTO;
 import com.example.bookpulse.dto.MemberDTO;
 import com.example.bookpulse.entity.BookEntity;
 import com.example.bookpulse.entity.MemberEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class BookService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID를 가진 도서를 찾을 수 없습니다: " + id));
     }
 
-    // 최신 도서 목록 조회 (모든 사용자가 접근 가능)
+    // 신작 도서 목록 조회 (모든 사용자가 접근 가능)
     public List<BookEntity> getNewBooks() {
         return bookRepository.findByIsNewBookTrue();
     }
@@ -38,8 +40,11 @@ public class BookService {
         return bookRepository.findByIsBestsellerTrue();
     }
 
-    // 제목으로 도서 검색 (모든 사용자가 접근 가능)
-    public List<BookEntity> searchBooksByTitle(String title) {
-        return bookRepository.findByTitleContaining(title);
+    // 제목, 저자, 출판사로 도서 검색
+    public List<BookDTO> searchBooks(String query) {
+        List<BookEntity> books = bookRepository.searchBooks(query);
+        return books.stream()
+                .map(BookDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

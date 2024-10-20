@@ -58,7 +58,7 @@ h1 {
 
 .book-section {
     margin-bottom: 40px;
-    position: relative; /* 더보기 버튼을 절대 위치로 설정할 부모 */
+    position: relative;
 }
 
 .book-list {
@@ -68,7 +68,6 @@ h1 {
 }
 
 .book-item {
-    background-color: #ecf0f1;
     text-align: center;
     padding: 15px;
 }
@@ -92,7 +91,7 @@ h1 {
 
 .search-bar {
     display: flex;
-    justify-content: center; /* 검색 창을 가운데 정렬 */
+    justify-content: center;
     margin-bottom: 30px;
 }
 
@@ -128,9 +127,9 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    position: absolute; /* 절대 위치로 설정 */
-    top: 0; /* 상단에 위치 */
-    right: 0; /* 오른쪽 끝에 위치 */
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .more-button:hover {

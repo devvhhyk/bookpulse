@@ -27,7 +27,6 @@ public class JwtServiceImpl implements JwtService {
                 .signWith(secretKey, SignatureAlgorithm.HS256) // 대칭 키와 HS256 사용
                 .compact();
     }
-
     @Override
     public Claims getClams(String token) {
         // 토큰에서 클레임 추출
@@ -54,4 +53,6 @@ public class JwtServiceImpl implements JwtService {
         Claims claims = getClams(token);
         return Integer.parseInt(claims.get("id").toString());
     }
+
+
 }

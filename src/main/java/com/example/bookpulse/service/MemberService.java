@@ -63,13 +63,12 @@ public class MemberService {
 
             // 비밀번호를 평문 그대로 비교
             if (password.equals(member.getPassword())) {
-                // JWT 토큰 생성 후 반환
-                return jwtService.getToken("id", member.getId());
+                // JWT 토큰 생성 시 이메일 추가
+                return jwtService.getToken("email", member.getEmail());
             }
         }
         return null; // 로그인 실패 시
     }
-
     public boolean checkEmailDuplicate(String email) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
