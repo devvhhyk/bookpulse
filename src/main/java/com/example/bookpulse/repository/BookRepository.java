@@ -9,12 +9,14 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
-    // 신작 도서만 조회
-    List<BookEntity> findByIsNewBookTrue();
-
     // 베스트셀러 도서만 조회
     List<BookEntity> findByIsBestsellerTrue();
 
+    // 신작 도서만 조회
+    List<BookEntity> findByIsNewBookTrue();
+
     @Query("SELECT b FROM BookEntity b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(b.author) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(b.publisher) LIKE LOWER(CONCAT('%', :query, '%'))")
     List<BookEntity> searchBooks(@Param("query") String query);
+
+
 }

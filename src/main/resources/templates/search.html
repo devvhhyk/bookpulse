@@ -5,22 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>검색 결과</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="/js/search.js"></script>
+    <link rel="stylesheet" href="/css/books.css">
 </head>
 <body>
 <h1>검색 결과: "<span th:text="${query}"></span>"</h1>
 <div class="book-list">
-    <th:block th:each="book : ${books}">
+    <th:block th:each="book, iterStat : ${books}">
         <div class="book-item">
-            <img th:src="${book.imageUrl}" alt="도서 이미지">
-            <p th:text="${book.title}" class="book-title"></p>
-            <p th:text="'저자: ' + ${book.author}" class="book-author"></p>
-            <p th:text="'출판사: ' + ${book.publisher}" class="book-publisher"></p>
-            <p th:text="'가격: ' + ${book.price} + '원'" class="book-price"></p>
+            <span class="book-index" th:text="${iterStat.count}">1</span>
+            <a th:href="@{'/books/detail/' + ${book.id}}">
+                <img th:src="${book.imageUrl}" alt="도서 이미지" class="book-image" />
+            </a>
+            <div class="book-info">
+                <a th:href="@{'/books/detail/' + ${book.id}}">
+                    <p th:text="${book.title}" class="book-title"></p>
+                </a>
+                <p th:text="'저자: ' + ${book.author}" class="book-author"></p>
+                <p th:text="'출판사: ' + ${book.publisher}" class="book-publisher"></p>
+                <p th:text="'가격: ' + ${book.price} + '원'" class="book-price"></p>
+            </div>
+            <div class="book-actions">
+                <button class="wishlist-button">♡ 찜하기</button>
+                <button class="cart-button">장바구니</button>
+                <button class="buy-button">바로구매</button>
+            </div>
         </div>
     </th:block>
 </div>
-<a href="/" class="back-link">홈으로</a>
+<a href="/" class="back-button">홈으로</a>
+<script src="/js/books.js"></script>
 </body>
 </html>

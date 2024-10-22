@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${book.title} + ' - Bookpulse'">도서 상세 보기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/bookDetail.css">
+</head>
+<body>
+<div class="container">
+    <div class="book-detail">
+        <div class="book-image">
+            <img th:src="${book.imageUrl}" alt="도서 이미지" />
+        </div>
+        <div class="book-info">
+            <h1 th:text="${book.title}">도서 제목</h1>
+            <p th:text="'저자: ' + ${book.author}">저자</p>
+            <p th:text="'출판사: ' + ${book.publisher}">출판사</p>
+            <p th:text="${book.description}">도서 설명</p>
+            <p th:text="'가격: ' + ${formattedPrice} + '원'" class="book-price" id="bookPrice">가격</p>
+
+            <div class="price-info">
+                <p id="totalPrice" th:text="'총 상품 금액: ' + ${book.price} + '원'">총 상품 금액</p>
+            </div>
+
+            <div class="quantity">
+                <button id="decreaseBtn">-</button>
+                <input type="text" id="quantity" value="1" readonly>
+                <button id="increaseBtn">+</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="wishlist-button" onclick="toggleWishlist()">
+                    <span id="wishlist-icon">♡</span> 찜하기
+                </button>
+                <button class="cart-button" onclick="addToCart()">장바구니 담기</button>
+                <button class="buy-now-button" onclick="buyNow()">바로 구매</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/bookDetail.js"></script>
+</body>
+</html>

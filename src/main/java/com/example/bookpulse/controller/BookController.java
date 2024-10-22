@@ -8,12 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,16 +24,9 @@ public class BookController {
     @GetMapping("/books")
     public String getAllBooks(Model model) {
         List<BookEntity> books = bookService.getAllBooks();
+
         model.addAttribute("books", books);
         return "books";
-    }
-
-    // 신작 도서 전체 목록 표시
-    @GetMapping("/books/newbook")
-    public String getNewBooks(Model model) {
-        List<BookEntity> newBooks = bookService.getNewBooks();
-        model.addAttribute("newBooks", newBooks);
-        return "newbook";
     }
 
     // 베스트셀러 전체 목록 표시
@@ -45,6 +37,14 @@ public class BookController {
         return "bestseller";
     }
 
+    // 신작 도서 전체 목록 표시
+    @GetMapping("/books/newbook")
+    public String getNewBooks(Model model) {
+        List<BookEntity> newBooks = bookService.getNewBooks();
+        model.addAttribute("newBooks", newBooks);
+        return "newbook";
+    }
+
     // 도서 검색
     @GetMapping("/books/search")
     public String searchBooks(@RequestParam("query") String query, Model model) {
@@ -52,5 +52,18 @@ public class BookController {
         model.addAttribute("books", books);
         model.addAttribute("query", query);
         return "search";
+    }
+
+    // 도서 상세 페이지
+    @GetMapping("/books/detail/{id}")
+    public String getBookDetail(@PathVariable("id") Long id, Model model) {
+        BookEntity book = bookService.getBookById(id);
+
+        String formattedPrice = NumberFormat.getNumberInstance(Locale.KOREA).format(book.getPrice());
+
+        model.addAttribute("book", book);
+        model.addAttribute("formattedPrice", formattedPrice);
+
+        return "bookDetail";
     }
 }

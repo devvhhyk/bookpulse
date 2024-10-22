@@ -39,9 +39,13 @@
             <div class="book-list">
                 <th:block th:each="book : ${bestsellers}">
                     <div class="book-item">
-                        <img th:src="${book.imageUrl}" alt="도서 이미지" />
-                        <p th:text="${book.title}" class="book-title"></p>
-                        <p th:text="'저자: ' + ${book.author}" class="book-author"></p>
+                        <a th:href="@{'/books/detail/' + ${book.id}}">
+                            <img th:src="${book.imageUrl}" alt="도서 이미지" class="book-image"/>
+                        </a>
+                        <a th:href="@{'/books/detail/' + ${book.id}}" class="book-title">
+                            <p th:text="${book.title}">도서 제목</p>
+                        </a>
+                        <p th:text="'저자: ' + ${book.author}" class="book-author">저자</p>
                     </div>
                 </th:block>
             </div>
@@ -54,9 +58,13 @@
             <div class="book-list">
                 <th:block th:each="book : ${newBooks}">
                     <div class="book-item">
-                        <img th:src="${book.imageUrl}" alt="도서 이미지" />
-                        <p th:text="${book.title}" class="book-title"></p>
-                        <p th:text="'저자: ' + ${book.author}" class="book-author"></p>
+                        <a th:href="@{'/books/detail/' + ${book.id}}">
+                            <img th:src="${book.imageUrl}" alt="도서 이미지" class="book-image"/>
+                        </a>
+                        <a th:href="@{'/books/detail/' + ${book.id}}" class="book-title">
+                            <p th:text="${book.title}">도서 제목</p>
+                        </a>
+                        <p th:text="'저자: ' + ${book.author}" class="book-author">저자</p>
                     </div>
                 </th:block>
             </div>

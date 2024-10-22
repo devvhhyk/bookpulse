@@ -30,14 +30,14 @@ public class BookService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID를 가진 도서를 찾을 수 없습니다: " + id));
     }
 
-    // 신작 도서 목록 조회 (모든 사용자가 접근 가능)
-    public List<BookEntity> getNewBooks() {
-        return bookRepository.findByIsNewBookTrue();
-    }
-
     // 베스트셀러 도서 목록 조회 (모든 사용자가 접근 가능)
     public List<BookEntity> getBestsellers() {
         return bookRepository.findByIsBestsellerTrue();
+    }
+
+    // 신작 도서 목록 조회 (모든 사용자가 접근 가능)
+    public List<BookEntity> getNewBooks() {
+        return bookRepository.findByIsNewBookTrue();
     }
 
     // 제목, 저자, 출판사로 도서 검색

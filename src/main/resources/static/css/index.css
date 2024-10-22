@@ -135,3 +135,17 @@ h1 {
 .more-button:hover {
     background-color: #2980b9;
 }
+
+.book-image {
+    cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+}
+
+.book-title {
+    color: #3498db;
+    text-decoration: none;
+    cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+}
+
+.book-title:hover {
+    text-decoration: underline; /* 제목에 마우스를 올렸을 때 밑줄 표시 */
+}
